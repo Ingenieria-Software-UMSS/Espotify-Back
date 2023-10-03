@@ -26,11 +26,9 @@ public class ThumbnailController {
 
 	@PostMapping(value = "/thumbnail/add")
 	public ResponseEntity<Thumbnail> addThumbnail(@RequestParam("filename") String filename, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-		System.out.println(multipartFile.getContentType());
-		
 		String imageId = imageService.addImage(filename, multipartFile);
 		String imageUrl = "http://localhost:8080/storage/image/" + imageId;
-		Thumbnail thumbnail = thumbnailService.addThumbnail(new Thumbnail(null, filename, imageUrl));
+		Thumbnail thumbnail = thumbnailService.addThumbnail(new Thumbnail(null, filename, imageUrl, null));
 
 		return ResponseEntity.ok().body(thumbnail);
 	}

@@ -17,12 +17,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Thumbnail {
+public class Artist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer thumbnailId;
-	private String filename;
-	private String thumbnailUrl;
-	@OneToMany(mappedBy = "thumbnail")
+	private Integer artistId;
+	private String artistName;
+	@OneToMany(mappedBy = "artist")
 	private List<Song> songList;
 }
