@@ -8,16 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.espotify.mongodb.service.IAudioService;
+import com.espotify.mongodb.service.AudioService;
+import com.espotify.mongodb.service.ImageService;
 import com.espotify.mysql.model.Artist;
 import com.espotify.mysql.model.Song;
 import com.espotify.mysql.model.Thumbnail;
-import com.espotify.mysql.service.IArtistService;
-import com.espotify.mysql.service.ISongService;
-import com.espotify.mysql.service.IThumbnailService;
+import com.espotify.mysql.service.ArtistService;
+import com.espotify.mysql.service.SongService;
+import com.espotify.mysql.service.ThumbnailService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -26,30 +30,72 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/espotify")
 public class SongController {
 	@Autowired
-	private ISongService songService;
+	private SongService songService;
 	@Autowired
-	private IArtistService artistService;
+	private ThumbnailService thumbnailService;
 	@Autowired
-	private IThumbnailService thumbnailService;
+	private ArtistService artistService;
 	@Autowired
-	private IAudioService audioService;
+	private ImageService imageService;
+	@Autowired
+	private AudioService audioService;
+	@Autowired
+	private ObjectMapper objectMapper;
 
-	@PostMapping(value = "/audio/add")
-	public Song addSong(@RequestParam("title") String title, @RequestParam("album") String album, @RequestParam("artist_id") String artistId, @RequestParam("thumbnail_id") String thumbnailId, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-		Artist artist = artistService.getArtistById(Integer.valueOf(artistId));
-		Thumbnail thumbnail = thumbnailService.getThumbnailById(Integer.valueOf(thumbnailId));
-		String songId = audioService.addAudio(title, multipartFile);
-		String songUrl = "http://localhost:8080/storage/audio/" + songId;
-		Song song = new Song(null, title, album, 0, new Date(), songUrl, artist, thumbnail);
+	@PostMapping(value = "/song/add-all")
+	@ResponseBody
+	public Song addSong(
+			@RequestParam("jsonSong") String jsonSong,
+			@RequestParam("jsonThumbnail") String jsonThumbnail,
+			@RequestParam("jsonArtist") String jsonArtist,
+			@RequestParam("image") MultipartFile image,
+			@RequestParam("audio") MultipartFile audio) throws IOException {
+		Song song = objectMapper.readValue(jsonSong, Song.class);
+		Thumbnail thumbnail = objectMapper.readValue(jsonThumbnail, Thumbnail.class);
+		Artist artist = objectMapper.readValue(jsonArtist, Artist.class);
+		String imageId = imageService.addImage(image);
+		String audioId = audioService.addAudio(audio);
+
+		thumbnail.setThumbnailUrl("http://localhost:8080/storage/image/" + imageId);
+
+		thumbnail = thumbnailService.addThumbnail(thumbnail);
+		artist = artistService.addArtist(artist);
+
+		song.setArtist(artist);
+		song.setThumbnail(thumbnail);
+		song.setUploadDate(new Date());
+		song.setSongUrl("http://localhost:8080/storage/audio/" + audioId);
+
 		return songService.addSong(song);
 	}
 
-	@GetMapping(value = "/audio/{id}")
-	public Song getSong(@PathVariable String songId) {
-		return songService.getSongById(Integer.valueOf(songId));
+	@PostMapping(value = "/song/add")
+	@ResponseBody
+	public Song addSong(@RequestParam("jsonSong") String jsonSong,
+			@RequestParam("jsonThumbnail") String jsonThumbnail,
+			@RequestParam("jsonArtist") String jsonArtist,
+			@RequestParam("audio") MultipartFile audio) throws IOException {
+		Song song = objectMapper.readValue(jsonSong, Song.class);
+		Thumbnail thumbnail = objectMapper.readValue(jsonThumbnail, Thumbnail.class);
+		Artist artist = objectMapper.readValue(jsonArtist, Artist.class);
+		String audioId = audioService.addAudio(audio);
+
+		song.setArtist(artistService.getArtistById(artist.getArtistId()));
+		song.setThumbnail(thumbnailService.getThumbnailById(thumbnail.getThumbnailId()));
+		song.setUploadDate(new Date());
+		song.setSongUrl("http://localhost:8080/storage/audio/" + audioId);
+
+		return songService.addSong(song);
 	}
 
-	@GetMapping(value = "/audios")
+	@GetMapping(value = "/song/{songId}")
+	@ResponseBody
+	public Song getSong(@PathVariable Integer songId) {
+		return songService.getSongById(songId);
+	}
+
+	@GetMapping(value = "/songs")
+	@ResponseBody
 	public List<Song> getSongList() {
 		return songService.getSongList();
 	}

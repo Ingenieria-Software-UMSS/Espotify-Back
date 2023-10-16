@@ -2,6 +2,8 @@ package com.espotify.mysql.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,11 +19,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+// @JsonIgnoreProperties(ignoreUnknown = true)
 public class Artist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer artistId;
 	private String artistName;
 	@OneToMany(mappedBy = "artist")
+	@JsonIgnoreProperties("artist")
 	private List<Song> songList;
 }

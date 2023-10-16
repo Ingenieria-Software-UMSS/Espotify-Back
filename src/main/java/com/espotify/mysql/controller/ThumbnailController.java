@@ -1,40 +1,56 @@
 package com.espotify.mysql.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.espotify.mongodb.service.IImageService;
+import com.espotify.mongodb.service.ImageService;
 import com.espotify.mysql.model.Thumbnail;
-import com.espotify.mysql.service.IThumbnailService;
+import com.espotify.mysql.service.ThumbnailService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/espotify")
 public class ThumbnailController {
 	@Autowired
-	private IThumbnailService thumbnailService;
+	private ThumbnailService thumbnailService;
 	@Autowired
-	private IImageService imageService;
+	private ImageService imageService;
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@PostMapping(value = "/thumbnail/add")
-	public ResponseEntity<Thumbnail> addThumbnail(@RequestParam("filename") String filename, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-		String imageId = imageService.addImage(filename, multipartFile);
-		String imageUrl = "http://localhost:8080/storage/image/" + imageId;
-		Thumbnail thumbnail = thumbnailService.addThumbnail(new Thumbnail(null, filename, imageUrl, null));
+	@ResponseBody
+	public Thumbnail addThumbnail(
+			@RequestParam("jsonThumbnail") String jsonImage,
+			@RequestParam("image") MultipartFile image) throws IOException {
+		Thumbnail thumbnail = objectMapper.readValue(jsonImage, Thumbnail.class);
+		String imageId = imageService.addImage(image);
+		
+		thumbnail.setFilename(thumbnail.getFilename());
+		thumbnail.setThumbnailUrl("http://localhost:8080/storage/image/" + imageId);
 
-		return ResponseEntity.ok().body(thumbnail);
+		return thumbnailService.addThumbnail(thumbnail);
 	}
 
 	@GetMapping(value = "/thumbnail/{thumbnailId}")
-	public ResponseEntity<Thumbnail> getThumbnail(@PathVariable String thumbnailId) {
-		return ResponseEntity.ok().body(thumbnailService.getThumbnailById(Integer.valueOf(thumbnailId)));
+	@ResponseBody
+	public Thumbnail getThumbnail(@PathVariable Integer thumbnailId) {
+		return thumbnailService.getThumbnailById(thumbnailId);
+	}
+
+	@GetMapping(value = "/thumbnails")
+	@ResponseBody
+	public List<Thumbnail> getThumbnailList() {
+		return thumbnailService.getThumbnailList();
 	}
 }

@@ -17,6 +17,5 @@ import lombok.ToString;
 public class Image {
 	@Id
 	private String id;
-	private String title;
 	private Binary image;
 }
