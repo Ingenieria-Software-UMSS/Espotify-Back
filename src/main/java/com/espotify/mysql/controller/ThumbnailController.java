@@ -18,6 +18,8 @@ import com.espotify.mysql.model.Thumbnail;
 import com.espotify.mysql.service.ThumbnailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/espotify")
 public class ThumbnailController {
@@ -27,6 +29,8 @@ public class ThumbnailController {
 	private ImageService imageService;
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Autowired
+	private HttpServletRequest httpServletRequest;
 
 	@PostMapping(value = "/thumbnail/add")
 	@ResponseBody
@@ -35,9 +39,10 @@ public class ThumbnailController {
 			@RequestParam("image") MultipartFile image) throws IOException {
 		Thumbnail thumbnail = objectMapper.readValue(jsonImage, Thumbnail.class);
 		String imageId = imageService.addImage(image);
+		String httpHost = "https://" + httpServletRequest.getHeader("host");
 		
 		thumbnail.setFilename(thumbnail.getFilename());
-		thumbnail.setThumbnailUrl("http://localhost:8080/storage/image/" + imageId);
+		thumbnail.setThumbnailUrl(httpHost + "/storage/image/" + imageId);
 
 		return thumbnailService.addThumbnail(thumbnail);
 	}

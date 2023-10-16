@@ -22,6 +22,8 @@ import com.espotify.mysql.service.SongService;
 import com.espotify.mysql.service.ThumbnailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -41,6 +43,8 @@ public class SongController {
 	private AudioService audioService;
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Autowired
+	private HttpServletRequest httpServletRequest;
 
 	@PostMapping(value = "/song/add-all")
 	@ResponseBody
@@ -55,8 +59,9 @@ public class SongController {
 		Artist artist = objectMapper.readValue(jsonArtist, Artist.class);
 		String imageId = imageService.addImage(image);
 		String audioId = audioService.addAudio(audio);
+		String httpHost = "https://" + httpServletRequest.getHeader("host");
 
-		thumbnail.setThumbnailUrl("http://localhost:8080/storage/image/" + imageId);
+		thumbnail.setThumbnailUrl(httpHost + "/storage/image/" + imageId);
 
 		thumbnail = thumbnailService.addThumbnail(thumbnail);
 		artist = artistService.addArtist(artist);
@@ -64,7 +69,7 @@ public class SongController {
 		song.setArtist(artist);
 		song.setThumbnail(thumbnail);
 		song.setUploadDate(new Date());
-		song.setSongUrl("http://localhost:8080/storage/audio/" + audioId);
+		song.setSongUrl(httpHost + "/storage/audio/" + audioId);
 
 		return songService.addSong(song);
 	}
@@ -79,11 +84,12 @@ public class SongController {
 		Thumbnail thumbnail = objectMapper.readValue(jsonThumbnail, Thumbnail.class);
 		Artist artist = objectMapper.readValue(jsonArtist, Artist.class);
 		String audioId = audioService.addAudio(audio);
+		String httpHost = "https://" + httpServletRequest.getHeader("host");
 
 		song.setArtist(artistService.getArtistById(artist.getArtistId()));
 		song.setThumbnail(thumbnailService.getThumbnailById(thumbnail.getThumbnailId()));
 		song.setUploadDate(new Date());
-		song.setSongUrl("http://localhost:8080/storage/audio/" + audioId);
+		song.setSongUrl(httpHost + "/storage/audio/" + audioId);
 
 		return songService.addSong(song);
 	}
