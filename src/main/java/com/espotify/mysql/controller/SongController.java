@@ -59,7 +59,7 @@ public class SongController {
 		Artist artist = objectMapper.readValue(jsonArtist, Artist.class);
 		String imageId = imageService.addImage(image);
 		String audioId = audioService.addAudio(audio);
-		String httpHost = httpServletRequest.getHeader("host");
+		String httpHost = "http://" + httpServletRequest.getHeader("host");
 
 		thumbnail.setThumbnailUrl(httpHost + "/storage/image/" + imageId);
 
@@ -84,7 +84,7 @@ public class SongController {
 		Thumbnail thumbnail = objectMapper.readValue(jsonThumbnail, Thumbnail.class);
 		Artist artist = objectMapper.readValue(jsonArtist, Artist.class);
 		String audioId = audioService.addAudio(audio);
-		String httpHost = httpServletRequest.getHeader("host");
+		String httpHost = "http://" + httpServletRequest.getHeader("host");
 
 		song.setArtist(artistService.getArtistById(artist.getArtistId()));
 		song.setThumbnail(thumbnailService.getThumbnailById(thumbnail.getThumbnailId()));
