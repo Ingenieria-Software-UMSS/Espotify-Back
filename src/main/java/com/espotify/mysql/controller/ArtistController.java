@@ -32,7 +32,7 @@ public class ArtistController {
 		return artistService.getArtistById(songId);
 	}
 
-	@GetMapping(value = "/artists")
+	@GetMapping(value = "/artist/list")
 	@ResponseBody
 	public List<Artist> getArtistList() {
 		return artistService.getArtistList();

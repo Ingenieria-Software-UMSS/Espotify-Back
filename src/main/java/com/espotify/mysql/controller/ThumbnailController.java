@@ -39,7 +39,7 @@ public class ThumbnailController {
 			@RequestParam("image") MultipartFile image) throws IOException {
 		Thumbnail thumbnail = objectMapper.readValue(jsonImage, Thumbnail.class);
 		String imageId = imageService.addImage(image);
-		String httpHost = "https://" + httpServletRequest.getHeader("host");
+		String httpHost = httpServletRequest.getHeader("host");
 		
 		thumbnail.setFilename(thumbnail.getFilename());
 		thumbnail.setThumbnailUrl(httpHost + "/storage/image/" + imageId);
@@ -53,7 +53,7 @@ public class ThumbnailController {
 		return thumbnailService.getThumbnailById(thumbnailId);
 	}
 
-	@GetMapping(value = "/thumbnails")
+	@GetMapping(value = "/thumbnail/list")
 	@ResponseBody
 	public List<Thumbnail> getThumbnailList() {
 		return thumbnailService.getThumbnailList();
