@@ -9,5 +9,9 @@ public interface SongService {
 
 	public Song getSongById(Integer songId);
 
-	public List<Song> getSongList();
+	public List<Song> getAllSongs();
+
+	public Song updateSong(Song song);
+
+	public Song deleteSong(Integer songId);
 }

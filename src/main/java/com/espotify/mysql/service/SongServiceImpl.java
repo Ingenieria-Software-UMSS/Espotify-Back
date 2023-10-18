@@ -24,7 +24,19 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
-	public List<Song> getSongList() {
+	public List<Song> getAllSongs() {
 		return songRepository.findAll();
+	}
+
+	@Override
+	public Song updateSong(Song song) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'updateSong'");
+	}
+
+	@Override
+	public Song deleteSong(Integer songId) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'deleteSong'");
 	}
 }

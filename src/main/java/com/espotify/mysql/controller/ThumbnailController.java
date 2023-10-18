@@ -55,7 +55,7 @@ public class ThumbnailController {
 
 	@GetMapping(value = "/thumbnail/list")
 	@ResponseBody
-	public List<Thumbnail> getThumbnailList() {
-		return thumbnailService.getThumbnailList();
+	public List<Thumbnail> getAllThumbnails() {
+		return thumbnailService.getAllThumbnails();
 	}
 }

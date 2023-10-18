@@ -102,7 +102,7 @@ public class SongController {
 
 	@GetMapping(value = "/song/list")
 	@ResponseBody
-	public List<Song> getSongList() {
-		return songService.getSongList();
+	public List<Song> getAllSongs() {
+		return songService.getAllSongs();
 	}
 }

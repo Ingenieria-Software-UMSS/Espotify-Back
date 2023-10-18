@@ -34,7 +34,7 @@ public class ArtistController {
 
 	@GetMapping(value = "/artist/list")
 	@ResponseBody
-	public List<Artist> getArtistList() {
-		return artistService.getArtistList();
+	public List<Artist> getAllArtists() {
+		return artistService.getAllArtists();
 	}
 }

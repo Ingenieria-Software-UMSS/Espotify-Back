@@ -24,7 +24,19 @@ public class ThumbnailServiceImpl implements ThumbnailService {
 	}
 
 	@Override
-	public List<Thumbnail> getThumbnailList() {
+	public List<Thumbnail> getAllThumbnails() {
 		return thumbnailRepository.findAll();
+	}
+
+	@Override
+	public Thumbnail updateThumbnail(Thumbnail thumbnail) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'updateThumbnail'");
+	}
+
+	@Override
+	public Thumbnail deleteThumbnail(Integer thumbnailId) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'deleteThumbnail'");
 	}
 }

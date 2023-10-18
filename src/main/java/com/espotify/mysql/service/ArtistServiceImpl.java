@@ -24,8 +24,20 @@ public class ArtistServiceImpl implements ArtistService {
 	}
 
 	@Override
-	public List<Artist> getArtistList() {
+	public List<Artist> getAllArtists() {
 		return artistRepository.findAll();
+	}
+
+	@Override
+	public Artist updateArtist(Artist artist) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'updateArtist'");
+	}
+
+	@Override
+	public Artist deleteArtist(Integer artistId) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'deleteArtist'");
 	}
 	
 }

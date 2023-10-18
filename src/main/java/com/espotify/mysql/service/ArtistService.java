@@ -9,5 +9,9 @@ public interface ArtistService {
 
 	public Artist getArtistById(Integer artistId);
 
-	public List<Artist> getArtistList();
+	public Artist updateArtist(Artist artist);
+
+	public Artist deleteArtist(Integer artistId);
+
+	public List<Artist> getAllArtists();
 }
