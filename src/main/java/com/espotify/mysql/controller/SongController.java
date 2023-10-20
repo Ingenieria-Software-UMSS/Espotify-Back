@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/espotify")
 public class SongController {
 	@Autowired
 	private SongService songService;
@@ -74,7 +72,7 @@ public class SongController {
 		return songService.addSong(song);
 	}
 
-	@PostMapping(value = "/song/add")
+	@PostMapping(value = "/song")
 	@ResponseBody
 	public Song addSong(@RequestParam("jsonSong") String jsonSong,
 			@RequestParam("jsonThumbnail") String jsonThumbnail,
@@ -100,7 +98,7 @@ public class SongController {
 		return songService.getSongById(songId);
 	}
 
-	@GetMapping(value = "/song/list")
+	@GetMapping(value = "/song")
 	@ResponseBody
 	public List<Song> getAllSongs() {
 		return songService.getAllSongs();

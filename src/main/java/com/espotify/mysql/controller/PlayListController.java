@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,13 +15,12 @@ import com.espotify.mysql.model.PlayList;
 import com.espotify.mysql.service.PlayListService;
 
 @RestController
-@RequestMapping("/espotify")
 public class PlayListController {
 	
 	@Autowired
 	private PlayListService playListService;
 
-	@PostMapping(value = "/play-list/add")
+	@PostMapping(value = "/play-list")
 	@ResponseBody
 	public PlayList addPlayList(@RequestBody PlayList playList) {
 		playList.setCreationDate(new Date());
@@ -36,7 +34,7 @@ public class PlayListController {
 		return playListService.getPlayListById(playListId);
 	}
 
-	@GetMapping(value = "/play-list/list")
+	@GetMapping(value = "/play-list")
 	@ResponseBody
 	public List<PlayList> getAllPlayLists() {
 		return playListService.getAllPlayLists();
