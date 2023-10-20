@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/espotify")
 public class ThumbnailController {
 	@Autowired
 	private ThumbnailService thumbnailService;
@@ -32,7 +30,7 @@ public class ThumbnailController {
 	@Autowired
 	private HttpServletRequest httpServletRequest;
 
-	@PostMapping(value = "/thumbnail/add")
+	@PostMapping(value = "/thumbnail")
 	@ResponseBody
 	public Thumbnail addThumbnail(
 			@RequestParam("jsonThumbnail") String jsonImage,
@@ -44,7 +42,7 @@ public class ThumbnailController {
 		thumbnail.setFilename(thumbnail.getFilename());
 		thumbnail.setThumbnailUrl(httpHost + "/storage/image/" + imageId);
 
-		return thumbnailService.addThumbnail(thumbnail);
+		return thumbnailService.saveThumbnail(thumbnail);
 	}
 
 	@GetMapping(value = "/thumbnail/{thumbnailId}")
@@ -53,9 +51,9 @@ public class ThumbnailController {
 		return thumbnailService.getThumbnailById(thumbnailId);
 	}
 
-	@GetMapping(value = "/thumbnail/list")
+	@GetMapping(value = "/thumbnail")
 	@ResponseBody
-	public List<Thumbnail> getThumbnailList() {
-		return thumbnailService.getThumbnailList();
+	public List<Thumbnail> getAllThumbnails() {
+		return thumbnailService.getAllThumbnails();
 	}
 }

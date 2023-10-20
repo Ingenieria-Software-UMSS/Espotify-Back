@@ -19,12 +19,17 @@ public class ThumbnailServiceImpl implements ThumbnailService {
 	}
 
 	@Override
-	public Thumbnail addThumbnail(Thumbnail thumbnail) {
+	public Thumbnail saveThumbnail(Thumbnail thumbnail) {
 		return thumbnailRepository.save(thumbnail);
 	}
 
 	@Override
-	public List<Thumbnail> getThumbnailList() {
+	public List<Thumbnail> getAllThumbnails() {
 		return thumbnailRepository.findAll();
+	}
+
+	@Override
+	public void deleteThumbnail(Thumbnail thumbnail) {
+		thumbnailRepository.delete(thumbnail);
 	}
 }

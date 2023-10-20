@@ -7,7 +7,9 @@ import com.espotify.mysql.model.Thumbnail;
 public interface ThumbnailService {
 	public Thumbnail getThumbnailById(Integer thumbnailId);
 
-	public List<Thumbnail> getThumbnailList();
+	public List<Thumbnail> getAllThumbnails();
 
-	public Thumbnail addThumbnail(Thumbnail thumbnail);
+	public Thumbnail saveThumbnail(Thumbnail thumbnail);
+
+	public void deleteThumbnail(Thumbnail thumbnail);
 }

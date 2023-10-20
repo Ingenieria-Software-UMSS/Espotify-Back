@@ -14,7 +14,7 @@ public class ArtistServiceImpl implements ArtistService {
 	private ArtistRepository artistRepository;
 
 	@Override
-	public Artist addArtist(Artist artist) {
+	public Artist saveArtist(Artist artist) {
 		return artistRepository.save(artist);
 	}
 
@@ -24,8 +24,13 @@ public class ArtistServiceImpl implements ArtistService {
 	}
 
 	@Override
-	public List<Artist> getArtistList() {
+	public List<Artist> getAllArtists() {
 		return artistRepository.findAll();
+	}
+
+	@Override
+	public void deleteArtist(Artist artist) {
+		artistRepository.delete(artist);
 	}
 	
 }

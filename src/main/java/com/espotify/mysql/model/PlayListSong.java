@@ -1,20 +1,16 @@
 package com.espotify.mysql.model;
 
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,26 +21,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-// @JsonIgnoreProperties(ignoreUnknown = true)
-public class Song {
+public class PlayListSong {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer songId;
-	private String songTitle;
-	private String songAlbum;
-	private String songDuration;
+	private Integer playListSongId;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date uploadDate;
-	private String songUrl;
+	private Date registrationDate;
 	@ManyToOne
-	@JoinColumn(name = "artist_id")
-	@JsonIgnoreProperties("songList")
-	private Artist artist;
+	@JoinColumn(name = "song_id")
+	@JsonIgnoreProperties("playListSongList")
+	private Song song;
 	@ManyToOne
-	@JoinColumn(name = "thumbnail_id")
-	@JsonIgnoreProperties("songList")
-	private Thumbnail thumbnail;
-	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<PlayListSong> playListSongList;
+	@JoinColumn(name = "play_list_id")
+	@JsonIgnoreProperties("playListSongList")
+	private PlayList playList;
 }

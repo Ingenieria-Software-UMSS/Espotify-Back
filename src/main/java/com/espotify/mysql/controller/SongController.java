@@ -6,7 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/espotify")
 public class SongController {
 	@Autowired
 	private SongService songService;
@@ -63,18 +63,18 @@ public class SongController {
 
 		thumbnail.setThumbnailUrl(httpHost + "/storage/image/" + imageId);
 
-		thumbnail = thumbnailService.addThumbnail(thumbnail);
-		artist = artistService.addArtist(artist);
+		thumbnail = thumbnailService.saveThumbnail(thumbnail);
+		artist = artistService.saveArtist(artist);
 
 		song.setArtist(artist);
 		song.setThumbnail(thumbnail);
 		song.setUploadDate(new Date());
 		song.setSongUrl(httpHost + "/storage/audio/" + audioId);
 
-		return songService.addSong(song);
+		return songService.saveSong(song);
 	}
 
-	@PostMapping(value = "/song/add")
+	@PostMapping(value = "/song")
 	@ResponseBody
 	public Song addSong(@RequestParam("jsonSong") String jsonSong,
 			@RequestParam("jsonThumbnail") String jsonThumbnail,
@@ -91,7 +91,7 @@ public class SongController {
 		song.setUploadDate(new Date());
 		song.setSongUrl(httpHost + "/storage/audio/" + audioId);
 
-		return songService.addSong(song);
+		return songService.saveSong(song);
 	}
 
 	@GetMapping(value = "/song/{songId}")
@@ -100,9 +100,28 @@ public class SongController {
 		return songService.getSongById(songId);
 	}
 
-	@GetMapping(value = "/song/list")
+	@GetMapping(value = "/song")
 	@ResponseBody
-	public List<Song> getSongList() {
-		return songService.getSongList();
+	public List<Song> getAllSongs() {
+		return songService.getAllSongs();
+	}
+
+	@PutMapping(value = "/song/{songId}")
+	@ResponseBody
+	public Song updateSong(@PathVariable Integer songId, @RequestBody Song song) {
+		Song updatedSong = songService.getSongById(songId);
+
+		updatedSong.setSongTitle(song.getSongTitle());
+		updatedSong.setSongAlbum(song.getSongAlbum());
+		updatedSong.setSongDuration(song.getSongDuration());
+		updatedSong.setSongUrl(song.getSongUrl());
+
+		if (song.getThumbnail() != null)
+			updatedSong.setThumbnail(song.getThumbnail());
+
+		if (song.getArtist() != null)
+			updatedSong.setArtist(song.getArtist());
+
+		return songService.saveSong(updatedSong);
 	}
 }

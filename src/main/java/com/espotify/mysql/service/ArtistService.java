@@ -5,9 +5,11 @@ import java.util.List;
 import com.espotify.mysql.model.Artist;
 
 public interface ArtistService {
-	public Artist addArtist(Artist artist);
+	public Artist saveArtist(Artist artist);
 
 	public Artist getArtistById(Integer artistId);
 
-	public List<Artist> getArtistList();
+	public void deleteArtist(Artist artistId);
+
+	public List<Artist> getAllArtists();
 }

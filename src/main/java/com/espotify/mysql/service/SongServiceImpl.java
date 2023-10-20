@@ -14,7 +14,7 @@ public class SongServiceImpl implements SongService {
 	private SongRepository songRepository;
 
 	@Override
-	public Song addSong(Song song) {
+	public Song saveSong(Song song) {
 		return songRepository.save(song);
 	}
 
@@ -24,7 +24,12 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
-	public List<Song> getSongList() {
+	public List<Song> getAllSongs() {
 		return songRepository.findAll();
+	}
+
+	@Override
+	public void deleteSong(Song song) {
+		songRepository.delete(song);
 	}
 }
