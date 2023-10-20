@@ -2,7 +2,7 @@ package com.espotify.mysql.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +19,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-// @JsonIgnoreProperties(ignoreUnknown = true)
 public class Thumbnail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +26,9 @@ public class Thumbnail {
 	private String filename;
 	private String thumbnailUrl;
 	@OneToMany(mappedBy = "thumbnail")
-	@JsonIgnoreProperties("thumbnail")
+	@JsonIgnore
 	private List<Song> songList;
+	@OneToMany(mappedBy = "thumbnail")
+	@JsonIgnore
+	private List<PlayList> playLists;
 }

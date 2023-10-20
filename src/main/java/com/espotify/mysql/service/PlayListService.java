@@ -8,11 +8,11 @@ public interface PlayListService {
 
 	public PlayList getPlayListById(Integer playListId);
 
-	public PlayList addPlayList(PlayList playList);
-	
-	public PlayList updatePlayList(PlayList playList);
+	public PlayList savePlayList(PlayList playList);
 
-	public PlayList deletePlayList(Integer playListId);
+	public void deletePlayList(PlayList playList);
+
+	public void deletePlayListById(Integer playListId);
 
 	public List<PlayList> getAllPlayLists();
 }

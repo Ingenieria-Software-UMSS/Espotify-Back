@@ -15,30 +15,28 @@ public class PlayListSongServiceImpl implements PlayListSongService {
 	private PlayListSongRepository playListSongRepository;
 
 	@Override
-	public PlayListSong getPlayListSongById(Integer playListSongById) {
-		return playListSongRepository.findById(playListSongById).orElse(null);
+	public PlayListSong getPlayListSongById(Integer playListSongId) {
+		return playListSongRepository.findById(playListSongId).orElse(null);
 	}
 
 	@Override
-	public PlayListSong addPlayListSong(PlayListSong playListSong) {
+	public PlayListSong savePlayListSong(PlayListSong playListSong) {
 		return playListSongRepository.save(playListSong);
 	}
 
 	@Override
-	public PlayListSong updatePlayListSong(PlayListSong playListSong) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'updatePlayListSong'");
-	}
-
-	@Override
-	public PlayListSong deletePlayListSong(Integer playListSongId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deletePlayListSong'");
+	public void deletePlayListSong(PlayListSong playListSong) {
+		playListSongRepository.delete(playListSong);
 	}
 
 	@Override
 	public List<PlayListSong> getAllPlayListSongs() {
 		return playListSongRepository.findAll();
+	}
+
+	@Override
+	public void deletePlayListSongById(Integer playListSongId) {
+		playListSongRepository.deleteById(playListSongId);
 	}
 	
 }

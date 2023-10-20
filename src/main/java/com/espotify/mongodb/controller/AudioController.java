@@ -21,7 +21,7 @@ public class AudioController {
 	@Autowired
 	private AudioService audioService;
 
-	@PostMapping(value = "/audio/add")
+	@PostMapping(value = "/audio")
 	@ResponseBody
 	public String addAudio(@RequestParam("file") MultipartFile multipartFile) 
 			throws IOException {

@@ -14,7 +14,7 @@ public class SongServiceImpl implements SongService {
 	private SongRepository songRepository;
 
 	@Override
-	public Song addSong(Song song) {
+	public Song saveSong(Song song) {
 		return songRepository.save(song);
 	}
 
@@ -29,14 +29,7 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
-	public Song updateSong(Song song) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'updateSong'");
-	}
-
-	@Override
-	public Song deleteSong(Integer songId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deleteSong'");
+	public void deleteSong(Song song) {
+		songRepository.delete(song);
 	}
 }

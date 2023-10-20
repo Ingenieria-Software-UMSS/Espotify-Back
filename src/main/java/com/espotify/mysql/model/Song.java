@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,7 +44,7 @@ public class Song {
 	@JoinColumn(name = "thumbnail_id")
 	@JsonIgnoreProperties("songList")
 	private Thumbnail thumbnail;
-	@OneToMany(mappedBy = "song")
-	@JsonIgnoreProperties("song")
+	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<PlayListSong> playListSongList;
 }

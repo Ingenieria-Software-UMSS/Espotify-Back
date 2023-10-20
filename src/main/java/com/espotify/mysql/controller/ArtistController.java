@@ -21,7 +21,7 @@ public class ArtistController {
 	@PostMapping(value = "/artist")
 	@ResponseBody
 	public Artist addArtist(@RequestBody Artist artist) {
-		return artistService.addArtist(artist);
+		return artistService.saveArtist(artist);
 	}
 
 	@GetMapping(value = "/artist/{songId}")

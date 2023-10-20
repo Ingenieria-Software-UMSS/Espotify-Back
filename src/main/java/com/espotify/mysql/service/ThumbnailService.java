@@ -9,9 +9,7 @@ public interface ThumbnailService {
 
 	public List<Thumbnail> getAllThumbnails();
 
-	public Thumbnail addThumbnail(Thumbnail thumbnail);
+	public Thumbnail saveThumbnail(Thumbnail thumbnail);
 
-	public Thumbnail updateThumbnail(Thumbnail thumbnail);
-
-	public Thumbnail deleteThumbnail(Integer thumbnailId);
+	public void deleteThumbnail(Thumbnail thumbnail);
 }

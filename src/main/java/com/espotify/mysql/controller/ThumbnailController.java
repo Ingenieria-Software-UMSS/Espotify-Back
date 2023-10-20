@@ -42,7 +42,7 @@ public class ThumbnailController {
 		thumbnail.setFilename(thumbnail.getFilename());
 		thumbnail.setThumbnailUrl(httpHost + "/storage/image/" + imageId);
 
-		return thumbnailService.addThumbnail(thumbnail);
+		return thumbnailService.saveThumbnail(thumbnail);
 	}
 
 	@GetMapping(value = "/thumbnail/{thumbnailId}")

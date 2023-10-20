@@ -19,7 +19,7 @@ public class ThumbnailServiceImpl implements ThumbnailService {
 	}
 
 	@Override
-	public Thumbnail addThumbnail(Thumbnail thumbnail) {
+	public Thumbnail saveThumbnail(Thumbnail thumbnail) {
 		return thumbnailRepository.save(thumbnail);
 	}
 
@@ -29,14 +29,7 @@ public class ThumbnailServiceImpl implements ThumbnailService {
 	}
 
 	@Override
-	public Thumbnail updateThumbnail(Thumbnail thumbnail) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'updateThumbnail'");
-	}
-
-	@Override
-	public Thumbnail deleteThumbnail(Integer thumbnailId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deleteThumbnail'");
+	public void deleteThumbnail(Thumbnail thumbnail) {
+		thumbnailRepository.delete(thumbnail);
 	}
 }

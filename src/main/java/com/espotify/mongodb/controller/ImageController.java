@@ -23,7 +23,7 @@ public class ImageController {
 	@Autowired
 	private ImageService imageService;
 
-	@PostMapping(value = "/image/add")
+	@PostMapping(value = "/image")
 	@ResponseBody
 	public String addImage(@RequestParam("image") MultipartFile multipartFile) throws IOException {
 		String id = imageService.addImage(multipartFile);
