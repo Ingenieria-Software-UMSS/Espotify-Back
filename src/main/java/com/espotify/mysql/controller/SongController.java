@@ -114,6 +114,7 @@ public class SongController {
 		updatedSong.setSongTitle(song.getSongTitle());
 		updatedSong.setSongAlbum(song.getSongAlbum());
 		updatedSong.setSongDuration(song.getSongDuration());
+		// updatedSong.setSongDescription(song.getSongDescription());
 		updatedSong.setSongUrl(song.getSongUrl());
 
 		if (song.getThumbnail() != null)

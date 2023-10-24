@@ -33,6 +33,7 @@ public class Song {
 	private String songTitle;
 	private String songAlbum;
 	private String songDuration;
+	// private String songDescription;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date uploadDate;
 	private String songUrl;
