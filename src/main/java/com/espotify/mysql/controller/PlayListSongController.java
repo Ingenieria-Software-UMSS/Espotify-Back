@@ -46,7 +46,7 @@ public class PlayListSongController {
 
 	@DeleteMapping(value = "play-list-song/{playListSongId}")
 	public ResponseEntity<Map<String, Boolean>> deletePlayListSong(@PathVariable Integer playListSongId) {
-		PlayListSong playListSong = playListSongService.getPlayListSongById(null);
+		PlayListSong playListSong = playListSongService.getPlayListSongById(playListSongId);
 
 		playListSongService.deletePlayListSong(playListSong);
 

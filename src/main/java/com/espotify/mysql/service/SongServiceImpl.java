@@ -32,4 +32,9 @@ public class SongServiceImpl implements SongService {
 	public void deleteSong(Song song) {
 		songRepository.delete(song);
 	}
+
+	@Override
+	public List<Song> getAllNewSongs() {
+		return songRepository.getAllNewSongs();
+	}
 }

@@ -106,6 +106,12 @@ public class SongController {
 		return songService.getAllSongs();
 	}
 
+	@GetMapping(value = "/new-songs")
+	@ResponseBody
+	public List<Song> getAllNewSongs() {
+		return songService.getAllNewSongs();
+	}
+
 	@PutMapping(value = "/song/{songId}")
 	@ResponseBody
 	public Song updateSong(@PathVariable Integer songId, @RequestBody Song song) {
