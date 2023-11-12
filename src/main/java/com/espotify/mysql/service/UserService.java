@@ -12,6 +12,7 @@ import com.espotify.dto.SignUpDto;
 import com.espotify.dto.UserDto;
 import com.espotify.exceptions.AppException;
 import com.espotify.mappers.UserMapper;
+import com.espotify.mysql.model.PlayHistory;
 import com.espotify.mysql.model.User;
 import com.espotify.mysql.repository.UserRepository;
 
@@ -29,6 +30,13 @@ public class UserService {
 				.orElseThrow(() -> new AppException("Unknow user", HttpStatus.NOT_FOUND));
 		
 		return userMapper.toUserDto(user);
+	}
+
+	public User findUserByEmail(String email) {
+		User user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new AppException("Unknow user", HttpStatus.NOT_FOUND));
+		
+		return user;
 	}
 
 	public UserDto login(CredentialsDto credentialsDto) {
@@ -51,6 +59,7 @@ public class UserService {
 		User user = userMapper.signUpToUser(userDto);
 
 		user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
+		user.setPlayHistory(new PlayHistory());
 
 		User savedUser = userRepository.save(user);
 

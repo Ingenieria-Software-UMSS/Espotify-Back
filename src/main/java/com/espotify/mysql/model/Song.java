@@ -3,6 +3,7 @@ package com.espotify.mysql.model;
 import java.util.Date;
 import java.util.List;
 
+import com.espotify.mysql.dto.SongDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,7 +26,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-// @JsonIgnoreProperties(ignoreUnknown = true)
 public class Song {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,6 @@ public class Song {
 	private String songTitle;
 	private String songAlbum;
 	private String songDuration;
-	// private String songDescription;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date uploadDate;
 	private String songUrl;
@@ -48,4 +47,20 @@ public class Song {
 	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<PlayListSong> playListSongList;
+	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<PlayHistorySong> playHistorySongList;
+
+	public SongDto toDto() {
+		return new SongDto(
+			songId, 
+			songTitle, 
+			songAlbum, 
+			songDuration, 
+			uploadDate, 
+			songUrl, 
+			artist.getArtistName(), 
+			thumbnail.getThumbnailUrl()
+		);
+	}
 }
