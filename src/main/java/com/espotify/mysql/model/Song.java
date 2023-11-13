@@ -36,6 +36,10 @@ public class Song {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date uploadDate;
 	private String songUrl;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer numberOfLikes;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer numberOfDislikes;
 	@ManyToOne
 	@JoinColumn(name = "artist_id")
 	@JsonIgnoreProperties("songList")
@@ -50,6 +54,13 @@ public class Song {
 	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<PlayHistorySong> playHistorySongList;
+	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<FavoritesListSong> favoritesListSongs;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	@JsonIgnore
+	private User user;
 
 	public SongDto toDto() {
 		return new SongDto(

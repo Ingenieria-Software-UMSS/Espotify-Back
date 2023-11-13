@@ -14,4 +14,6 @@ public interface SongService {
 	public List<Song> getAllNewSongs();
 
 	public void deleteSong(Song song);
+
+	public List<Song> getSongsByUserId(Long id);
 }

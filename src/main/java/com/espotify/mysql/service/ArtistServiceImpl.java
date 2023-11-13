@@ -15,7 +15,14 @@ public class ArtistServiceImpl implements ArtistService {
 
 	@Override
 	public Artist saveArtist(Artist artist) {
-		return artistRepository.save(artist);
+		Artist artistTmp = getArtistByName(artist.getArtistName());
+
+		if (artistTmp == null)
+			artist = artistRepository.save(artist);
+		else
+			artist = artistTmp;
+		
+		return artist;
 	}
 
 	@Override
@@ -31,6 +38,11 @@ public class ArtistServiceImpl implements ArtistService {
 	@Override
 	public void deleteArtist(Artist artist) {
 		artistRepository.delete(artist);
+	}
+
+	@Override
+	public Artist getArtistByName(String artistName) {
+		return artistRepository.findByArtistName(artistName);
 	}
 	
 }

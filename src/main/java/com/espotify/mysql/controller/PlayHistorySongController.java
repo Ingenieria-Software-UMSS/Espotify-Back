@@ -101,6 +101,7 @@ public class PlayHistorySongController {
 		UserDto userDto = (UserDto) authentication.getPrincipal();
 		User user = userService.findUserByEmail(userDto.getEmail());
 		List<PlayHistorySongDto> playHistorySongDtos = new ArrayList<>();
+		
 		playHistorySongService.getPlayHistorySongList(user.getPlayHistory()
 				.getPlayHistoryId()).forEach(song -> playHistorySongDtos.add(song.toDto()));
 

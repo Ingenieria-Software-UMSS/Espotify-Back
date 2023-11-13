@@ -37,4 +37,9 @@ public class SongServiceImpl implements SongService {
 	public List<Song> getAllNewSongs() {
 		return songRepository.getAllNewSongs();
 	}
+
+	@Override
+	public List<Song> getSongsByUserId(Long id) {
+		return songRepository.findSongByUserId(id);
+	}
 }

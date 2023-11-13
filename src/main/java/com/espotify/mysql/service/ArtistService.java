@@ -11,5 +11,7 @@ public interface ArtistService {
 
 	public void deleteArtist(Artist artistId);
 
+	public Artist getArtistByName(String artistName);
+
 	public List<Artist> getAllArtists();
 }

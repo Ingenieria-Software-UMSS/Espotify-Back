@@ -29,7 +29,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/song", "/song/{songId}", "/new-songs", 
                                     "/artist", "/artist/{artistId}",
                                     "/thumbnail", "/thumbnail/{thumbnailId}",
-                                    "/storage/image/{id}", "/storage/audio/{id}").permitAll()
+                                    "/storage/image/{id}", "/storage/audio/{id}",
+                                    "/play-list", "/play-list/{playListId}",
+                                    "/play-list-song", "/play-list-song/{playListSongId}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                                 .anyRequest().authenticated()
                 );

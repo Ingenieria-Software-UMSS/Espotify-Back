@@ -12,6 +12,7 @@ import com.espotify.dto.SignUpDto;
 import com.espotify.dto.UserDto;
 import com.espotify.exceptions.AppException;
 import com.espotify.mappers.UserMapper;
+import com.espotify.mysql.model.FavoritesList;
 import com.espotify.mysql.model.PlayHistory;
 import com.espotify.mysql.model.User;
 import com.espotify.mysql.repository.UserRepository;
@@ -60,6 +61,7 @@ public class UserService {
 
 		user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
 		user.setPlayHistory(new PlayHistory());
+		user.setFavoritesList(new FavoritesList());
 
 		User savedUser = userRepository.save(user);
 

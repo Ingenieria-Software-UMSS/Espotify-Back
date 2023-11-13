@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -37,4 +38,8 @@ public class PlayList {
 	@OneToMany(mappedBy = "playList", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("play_list")
 	private List<PlayListSong> playListSongList;
+	@ManyToOne
+	@JsonIgnoreProperties("user")
+	@JsonIgnore
+	private User user;
 }

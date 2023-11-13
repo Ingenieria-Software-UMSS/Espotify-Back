@@ -1,5 +1,7 @@
 package com.espotify.mysql.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -8,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,4 +33,11 @@ public class User {
 	@JoinColumn(name = "play_history_id")
 	@JsonIgnore
 	private PlayHistory playHistory;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "favorites_list_id")
+	private FavoritesList favoritesList;
+	@OneToMany(mappedBy = "user")
+	private List<PlayList> playLists;
+	@OneToMany(mappedBy = "user")
+	private List<Song> song;
 }
