@@ -68,6 +68,8 @@ public class Song {
 			songTitle, 
 			songAlbum, 
 			songDuration, 
+			numberOfLikes,
+			numberOfDislikes,
 			uploadDate, 
 			songUrl, 
 			artist.getArtistName(), 

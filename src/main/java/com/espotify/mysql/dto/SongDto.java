@@ -16,6 +16,8 @@ public class SongDto {
 	private String songTitle;
 	private String songAlbum;
 	private String songDuration;
+	private Integer numberOfLikes;
+	private Integer numberOfDislikes;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date uploadDate;
 	private String songUrl;

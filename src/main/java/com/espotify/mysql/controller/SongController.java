@@ -79,7 +79,6 @@ public class SongController {
 		thumbnail = thumbnailService.saveThumbnail(thumbnail);
 		artist = artistService.saveArtist(artist);
 
-
 		song.setArtist(artist);
 		song.setThumbnail(thumbnail);
 		song.setUploadDate(new Date());
