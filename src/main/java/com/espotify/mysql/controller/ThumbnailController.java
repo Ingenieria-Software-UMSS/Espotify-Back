@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,7 @@ public class ThumbnailController {
 	@PostMapping(value = "/thumbnail")
 	@ResponseBody
 	public Thumbnail addThumbnail(
+			Authentication authentication,
 			@RequestParam("jsonThumbnail") String jsonImage,
 			@RequestParam("image") MultipartFile image) throws IOException {
 		Thumbnail thumbnail = objectMapper.readValue(jsonImage, Thumbnail.class);

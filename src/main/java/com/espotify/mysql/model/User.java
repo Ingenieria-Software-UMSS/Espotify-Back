@@ -40,4 +40,15 @@ public class User {
 	private List<PlayList> playLists;
 	@OneToMany(mappedBy = "user")
 	private List<Song> song;
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof User) {
+			User u = (User) o;
+
+			return id.equals(u.id);
+		}
+
+		return false;
+	}
 }
