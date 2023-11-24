@@ -1,5 +1,6 @@
 package com.espotify.mysql.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.espotify.mysql.model.Artist;
+import com.espotify.mysql.model.Song;
 import com.espotify.mysql.service.ArtistService;
 
 @RestController
@@ -22,6 +24,7 @@ public class ArtistController {
 	@PostMapping(value = "/artist")
 	@ResponseBody
 	public Artist addArtist(Authentication authentication, @RequestBody Artist artist) {
+		artist.setUpdateDate(new Date());
 		return artistService.saveArtist(artist);
 	}
 
@@ -35,5 +38,11 @@ public class ArtistController {
 	@ResponseBody
 	public List<Artist> getAllArtists(Authentication authentication) {
 		return artistService.getAllArtists();
+	}
+
+	@GetMapping(value = "/new-artists")
+	@ResponseBody
+	public List<Song> getAllNewSongsByNewArtists() {
+		return artistService.getSongsByNewArtist();
 	}
 }

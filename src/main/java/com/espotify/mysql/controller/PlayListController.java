@@ -79,12 +79,24 @@ public class PlayListController {
 	@PostMapping(value = "/play-list")
 	@ResponseBody
 	public PlayList addPlayList(Authentication authentication, @RequestBody PlayList playList) {
+		
+		if (playList.getThumbnail() == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Imagen no encontrada");
+
+		Thumbnail thumbnail = thumbnailService.getThumbnailById(
+				playList.getThumbnail().getThumbnailId());
+		
+		if (thumbnail == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Imagen no encontrada");
+
 		UserDto userDto = (UserDto) authentication.getPrincipal();
 		User user = userService.findUserByEmail(userDto.getEmail());
-
+		
 		playList.setCreationDate(new Date());
 		playList.setUser(user);
-		
+
+		System.out.println(user.getEmail());
+
 		return playListService.savePlayList(playList);
 	}
 
@@ -106,7 +118,7 @@ public class PlayListController {
 		return playListService.getAllPlayLists(user);
 	}
 
-	@PutMapping(value = "play-list/{playListId}")
+	@PutMapping(value = "/play-list/{playListId}")
 	@ResponseBody
 	public PlayList updatePlayList(Authentication authentication, @PathVariable Integer playListId, @RequestBody PlayList playList) {
 		UserDto userDto = (UserDto) authentication.getPrincipal();
@@ -122,7 +134,7 @@ public class PlayListController {
 		return playListService.savePlayList(updatedPlayList);
 	}
 
-	@DeleteMapping(value = "play-list/{playListId}")
+	@DeleteMapping(value = "/play-list/{playListId}")
 	public ResponseEntity<Map<String, Boolean>> deletePlayList(Authentication authentication, @PathVariable Integer playListId) {
 		UserDto userDto = (UserDto) authentication.getPrincipal();
 		User user = userService.findUserByEmail(userDto.getEmail());

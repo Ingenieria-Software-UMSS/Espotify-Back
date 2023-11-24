@@ -16,12 +16,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
+@Entity
+@ToString
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,20 +37,23 @@ public class User {
 	private PlayHistory playHistory;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "favorites_list_id")
+	@JsonIgnore
 	private FavoritesList favoritesList;
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<PlayList> playLists;
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<Song> song;
 
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof User) {
-			User u = (User) o;
+	// @Override
+	// public boolean equals(Object o) {
+	// 	if (o instanceof User) {
+	// 		User u = (User) o;
 
-			return id.equals(u.id);
-		}
+	// 		return id.equals(u.id);
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 }

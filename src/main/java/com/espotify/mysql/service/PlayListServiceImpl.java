@@ -22,10 +22,13 @@ public class PlayListServiceImpl implements PlayListService {
 	public PlayList getPlayListById(User user, Integer playListId) {
 		PlayList playList = playListRepository.findById(playListId).orElse(null);
 
-		if (playList != null && playList.getUser().equals(user))
-			return playList;
+		if (playList == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Play List no encontrada");
+		
+		if(!playList.getUser().getId().equals(user.getId()))
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Artista no encontrado");
 
-		return null;
+		return playList;
 	}
 
 	@Override
@@ -35,7 +38,7 @@ public class PlayListServiceImpl implements PlayListService {
 
 	@Override
 	public void deletePlayList(User user, PlayList playList) {
-		if (playList.getUser().equals(user))
+		if (playList.getUser().getId().equals(user.getId()))
 			playListRepository.delete(playList);
 	}
 
@@ -45,7 +48,7 @@ public class PlayListServiceImpl implements PlayListService {
 		List<PlayList> playLists = playListRepository.findAll();
 
 		playLists.forEach(playList -> { 
-			if (playList.getUser().equals(user)) {
+			if (playList.getUser().getId().equals(user.getId())) {
 				result.add(playList);
 			}
 		});
@@ -55,10 +58,7 @@ public class PlayListServiceImpl implements PlayListService {
 
 	@Override
 	public void deletePlayListById(User user, Integer playListId) {
-		PlayList playList = getPlayListById(user, playListId);
-
-		if (playList != null)
-			playListRepository.deleteById(playListId);
+		playListRepository.deleteById(playListId);
 	}
 	
 }

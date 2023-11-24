@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                                 .requestMatchers(HttpMethod.GET, "/song", "/song/{songId}", "/new-songs", 
-                                    "/artist", "/artist/{artistId}",
+                                    "/artist", "/artist/{artistId}", "/new-artists",
                                     "/thumbnail", "/thumbnail/{thumbnailId}",
                                     "/storage/image/{id}", "/storage/audio/{id}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
